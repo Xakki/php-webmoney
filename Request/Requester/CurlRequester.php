@@ -73,7 +73,11 @@ class CurlRequester extends AbstractRequester
         if (trim($content) == '') {
             throw new RequesterException('No response was received from the server');
         }
-
+        
+        if(mb_detect_encoding($content) == 'UTF-8') {
+            $content = iconv('UTF-8', 'UTF-8//IGNORE', $content);
+        }
+        
         return $content;
     }
 }
